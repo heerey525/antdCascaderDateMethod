@@ -1,0 +1,16 @@
+{
+  "name": "govdata",
+  "version": "1.0.0",
+  "description": "爬取中国行政区域代码",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "heerey525",
+  "license": "ISC",
+  "dependencies": {
+    "cheerio": "^1.0.0-rc.3",
+    "nodemon": "^2.0.4",
+    "superagent": "^5.2.2"
+  }
+}

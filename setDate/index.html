@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>加工gov.json并导出</title>
+</head>
+<body>
+    <script type="text/javascript" src="zepto.min.js"></script>
+    <script type="text/javascript" src="./../getDate/gov.json"></script>
+    <script>
+        let provinceList = []
+        let cityList = []
+        let areaList = []
+        dataJson()
+        // $.ajax({  
+        //     type : "get",//使用get请求请求正确
+        //     url : "./gov.json",
+        //     dataType:"jsonp",
+        //     jsonp: false,
+        //     jsonpCallback: "showjson",
+        function dataJson() {
+            // success : function(data) { 
+                // 省级或直辖市： 第三，四位是 00
+                // 市级： 第五，六位是 00
+                // 省级直辖县： 第三，四位是 90
+                const _thisJson = govData
+                // console.log(govData)
+                _thisJson.map(item => {
+                    if (item.code.substring(2, 4) === '00') {
+                        item.children = []
+                        provinceList.push(item)
+                    } else if ((item.code.substring(2, 4) !== '00') && (item.code.substring(4, 6) === '00')) {
+                        item.children = []
+                        cityList.push(item)
+                    } else {
+                        areaList.push(item)
+                    }
+                })
+                // 将县级放入对应市级
+                for(let i=0;i<areaList.length;i++) {
+                    for(let j=0;j<cityList.length;j++) {
+                        if (areaList[i].code.substring(0, 4) === cityList[j].code.substring(0, 4)) {
+                            cityList[j].children.push(areaList[i])
+                        }
+                    }
+                }
+                // 将市级放入对应的省级
+                for(let z=0;z<cityList.length;z++) {
+                    for(let w=0;w<provinceList.length;w++) {
+                        if (cityList[z].code.substring(0, 2) === provinceList[w].code.substring(0, 2)) {
+                            provinceList[w].children.push(cityList[z])
+                        }
+                    }
+                }
+
+                // 四大直辖市
+                for(let p=0;p<areaList.length;p++) {
+                    for(let q=0;q<provinceList.length;q++) {
+                        if (provinceList[q].label === '北京市' || provinceList[q].label === '上海市' || provinceList[q].label === '天津市' || provinceList[q].label === '重庆市') {
+                            if (areaList[p].code.substring(0, 3) === provinceList[q].code.substring(0, 3)) {
+                                // areaList[p].children = []
+                                provinceList[q].children.push(areaList[p])
+                            }
+                        }
+                    }
+                }
+
+                console.log(JSON.stringify(provinceList))
+                saveJSON(provinceList)
+
+            }
+        // })
+        
+        function saveJSON(data, filename){
+            if(!data) {
+                alert('保存的数据为空');
+                return;
+            }
+            if(!filename) 
+                filename = 'adminDate.js'
+            if(typeof data === 'object'){
+                data = JSON.stringify(data, undefined, 4)
+            }
+            var blob = new Blob(['const options = ' + data], {type: 'text/javascript'}),
+            e = document.createEvent('MouseEvents'),
+            a = document.createElement('a')
+            a.download = filename
+            a.href = window.URL.createObjectURL(blob)
+            a.dataset.downloadurl = ['text/javascript', a.download, a.href].join(':')
+            e.initMouseEvent('click', true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null)
+            a.dispatchEvent(e)
+        }
+    </script>
+</body>
+</html>
