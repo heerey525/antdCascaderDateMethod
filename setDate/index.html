@@ -82,7 +82,7 @@
             if(typeof data === 'object'){
                 data = JSON.stringify(data, undefined, 4)
             }
-            var blob = new Blob(['const options = ' + data], {type: 'text/javascript'}),
+            var blob = new Blob(['export default const options = ' + data], {type: 'text/javascript'}),
             e = document.createEvent('MouseEvents'),
             a = document.createElement('a')
             a.download = filename
