@@ -1,16 +1,11 @@
 //导入依赖包
-const http = require("http");
-const path = require("path");
-const url = require("url");
 const fs = require("fs");
-const util = require('util');
- 
 const superagent = require("superagent");
 const cheerio = require("cheerio");
 
 superagent
-    // 2020年2月中华人民共和国县以上行政区划代码,可替换最新的
-    .get("http://www.mca.gov.cn/article/sj/xzqh/2020/2020/202003301019.html")
+    // 2020年6月中华人民共和国县以上行政区划代码,可替换最新的
+    .get("http://www.mca.gov.cn//article/sj/xzqh/2020/202006/202008310601.shtml")
     .end((error,response)=>{
         //获取页面文档数据
         var content = response.text;
