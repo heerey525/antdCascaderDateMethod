@@ -4,8 +4,8 @@ const superagent = require("superagent");
 const cheerio = require("cheerio");
 
 superagent
-    // 2020年6月中华人民共和国县以上行政区划代码,可替换最新的
-    .get("http://www.mca.gov.cn//article/sj/xzqh/2020/202006/202008310601.shtml")
+    // 2020年8月中华人民共和国县以上行政区划代码,可替换最新的
+    .get("http://www.mca.gov.cn//article/sj/xzqh/2020/2020/2020092500801.html")
     .end((error,response)=>{
         //获取页面文档数据
         var content = response.text;
@@ -21,14 +21,14 @@ superagent
         // console.log($("tbody").children()[3212].children[3].children[0].children[0].data)
         $("tbody").children().each((index, value) => {
             // 胡杨河市比较特殊
-            if (index === 3212) {
+            if (index === 3211) {
                 const code = value.children[3].children[0].children[0].data
                 const name = value.children[5].children[1].data
                 // console.log(index+'+'+code+'+'+name) // 输出到控制台
                 result.push({code: code, value: name, label: name})
             }
             // 北京市到澳门特别行政区
-            if ((index > 2 && index < 3212) || (index > 3212 && index < 3216)) {
+            if ((index > 2 && index < 3211) || (index > 3211 && index < 3215)) {
                 const code = value.children[3].children[0].data
                 let name = ''
                 if (value.children[5].children[0].data) {
