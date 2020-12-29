@@ -1,7 +1,7 @@
 # antdCascaderDateMethod
 作为获取https://github.com/heerey525/antdCascaderDate 此数据的方法，授人以鱼不如授人以渔
 
-代码中例子是爬取 2020年8月中华人民共和国县以上行政区划代码 http://www.mca.gov.cn//article/sj/xzqh/2020/2020/2020092500801.html， 生成json文件
+代码中例子是爬取 2020年8月中华人民共和国县以上行政区划代码 http://www.mca.gov.cn//article/sj/xzqh/2020/2020/2020092500801.html  生成json文件
 
 将生成的json文件根据省市区的特征用js遍历成为[{children: [children:[children]]}]的格式，并此数据最终导出到cities.js
 
