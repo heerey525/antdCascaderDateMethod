@@ -4,8 +4,8 @@ const superagent = require("superagent");
 const cheerio = require("cheerio");
 
 superagent
-    // 2020年8月中华人民共和国县以上行政区划代码,可替换最新的
-    .get("http://www.mca.gov.cn//article/sj/xzqh/2020/2020/2020092500801.html")
+    // 2020年10月中华人民共和国县以上行政区划代码,可替换最新的
+    .get("http://www.mca.gov.cn/article/sj/xzqh/2020/2020/2020112010001.html")
     .end((error,response)=>{
         //获取页面文档数据
         var content = response.text;
@@ -13,32 +13,12 @@ superagent
         var $ = cheerio.load(content);
         //定义一个空数组，用来接收数据
         var result=[];
-        // 省级name
-        // console.log($("tbody").children()[3].children[5].children[0].data)
-        // 市级name
-        // console.log($("tbody").children()[4].children[5].children[1].data)
-        // 特殊县级value
-        // console.log($("tbody").children()[3212].children[3].children[0].children[0].data)
-        $("tbody").children().each((index, value) => {
-            // 胡杨河市比较特殊
-            if (index === 3211) {
-                const code = value.children[3].children[0].children[0].data
-                const name = value.children[5].children[1].data
-                // console.log(index+'+'+code+'+'+name) // 输出到控制台
-                result.push({code: code, value: name, label: name})
-            }
+        $("tbody tr").each((index, value) => {
             // 北京市到澳门特别行政区
-            if ((index > 2 && index < 3211) || (index > 3211 && index < 3215)) {
-                const code = value.children[3].children[0].data
-                let name = ''
-                if (value.children[5].children[0].data) {
-                    // 省级名称
-                    name = value.children[5].children[0].data
-                } else {
-                    // 市、区名称
-                    name = value.children[5].children[1].data
-                }
-                // console.log(index+'+'+code+'+'+name) // 输出到控制台
+            if ((index > 2 && index < 3215)) {
+                const code = $(value).find('td').eq(1).text()
+                const name = $(value).find('td').eq(2).text().replace(/\s+/g, '')
+                // // console.log(index+'+'+code+'+'+name) // 输出到控制台
                 result.push({code: code, value: name, label: name})
             }
         })
