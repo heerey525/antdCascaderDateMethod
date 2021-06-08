@@ -5,7 +5,7 @@ const cheerio = require("cheerio");
 
 superagent
     // 2020年10月中华人民共和国县以上行政区划代码,可替换最新的
-    .get("http://preview.www.mca.gov.cn/article/sj/xzqh/2020/2020/202101041104.html")
+    .get("http://www.mca.gov.cn/article/sj/xzqh/2020/20201201.html")
     .end((error,response)=>{
         //获取页面文档数据
         var content = response.text;
