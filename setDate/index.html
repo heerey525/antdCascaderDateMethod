@@ -26,7 +26,7 @@
                 if (item.code.substring(2, 4) === '00') {
                     item.children = []
                     provinceList.push(item)
-                } else if ((item.code.substring(2, 4) !== '00') && (item.code.substring(4, 6) === '00')) {
+                } else if (item.code.substring(2, 4) === '90' || ((item.code.substring(2, 4) !== '00') && (item.code.substring(4, 6) === '00'))) {
                     item.children = []
                     cityList.push(item)
                 } else {
