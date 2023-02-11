@@ -10,7 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "cheerio": "^1.0.0-rc.3",
-    "nodemon": "^2.0.4",
+    "nodemon": "^2.0.20",
     "superagent": "^5.2.2"
   }
 }
