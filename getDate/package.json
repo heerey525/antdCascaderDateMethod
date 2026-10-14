@@ -4,13 +4,17 @@
   "description": "爬取中国行政区域代码",
   "main": "index.js",
   "scripts": {
+    "crawl": "node crawler.js",
+    "build": "node ../setDate/build.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "heerey525",
   "license": "ISC",
   "dependencies": {
     "cheerio": "^1.0.0-rc.3",
+    "iconv-lite": "^0.6.3",
     "nodemon": "^2.0.4",
-    "superagent": "^5.2.2"
+    "superagent": "^5.2.2",
+    "superagent-charset": "^1.2.0"
   }
 }
